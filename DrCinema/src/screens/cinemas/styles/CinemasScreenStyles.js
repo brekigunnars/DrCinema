@@ -1,26 +1,23 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  center: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
   },
   cinemaCard: {
-    padding: 16,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderRadius: 8,
-    backgroundColor: '#f8f8f8',
-    elevation: 2,
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
-  name: {
+  cinemaName: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 5,
   },
-  address: {
+  cinemaWebsite: {
     fontSize: 14,
-    marginTop: 4,
-    color: '#555',
+    color: '#007BFF',
   },
 });
