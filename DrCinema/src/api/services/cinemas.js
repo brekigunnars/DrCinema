@@ -6,7 +6,7 @@ import apiClient from '../apiClient';
  */
 export const getCinemas = async () => {
   try {
-    const response = await apiClient.get('/cinemas');
+    const response = await apiClient.get('/theaters');
     console.log('Cinemas fetched successfully:', response.data); // Debug log
     return response.data;
   } catch (error) {

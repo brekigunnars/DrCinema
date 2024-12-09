@@ -4,7 +4,7 @@ import { Buffer } from 'buffer';
 
 const BASE_URL = 'https://api.kvikmyndir.is';
 const USERNAME = 'brekia23'; // Replace with your actual username
-const PASSWORD = 'Geimgangla121'; // Replace with your actual password
+const PASSWORD = 'Geimganga121'; // Replace with your actual password
 
 export const authenticate = async () => {
   try {
