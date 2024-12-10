@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
+import YoutubePlayer from 'react-native-youtube-iframe';
 import { styles } from './styles/UpcomingMovieDetailScreenStyles';
 
 const UpcomingMovieDetailScreen = ({ route }) => {
+  // Youtube player constants
+  const [playing, setPlaying] = useState(false);
+
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+    }
+  }, []);
+
   const { upcomingMovie } = route.params; // Destructure the `movie` object from route.params
-  console.log(upcomingMovie)
+  const movieRuntime = upcomingMovie.omdb[0]?.Runtime
+  const trailerID = upcomingMovie.trailers[0]?.results[0]?.key
+
   if (!upcomingMovie) {
     return (
       <View style={styles.container}>
@@ -21,13 +33,28 @@ const UpcomingMovieDetailScreen = ({ route }) => {
         }}
         style={styles.poster}
       />
-      <Text style={styles.title}>{upcomingMovie.title}</Text>
-      <Text style={styles.plot}>{upcomingMovie.plot}</Text>
-      <Text style={styles.detail}>Duration: {upcomingMovie.omdb[0]?.Runtime || 'N/A'}</Text>
-      <Text style={styles.detail}>Year: {upcomingMovie.year}</Text>
-      <Text style={styles.detail}>
-        Genres: {upcomingMovie.genres.map((genre) => genre.Name).join(', ')}
-      </Text>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>{upcomingMovie.title}</Text>
+        <Text style={styles.plot}>{upcomingMovie.plot}</Text>
+        <Text style={styles.detail}>Duration: {movieRuntime || 'N/A'}</Text>
+        <Text style={styles.detail}>Year: {upcomingMovie.year}</Text>
+        <Text style={styles.detail}>
+          Genres: {upcomingMovie.genres.map((genre) => genre.Name).join(', ')}
+        </Text>
+      </View>
+      <View>
+        {trailerID ? (
+          <YoutubePlayer
+          height={300}
+          play={playing}
+          videoId={trailerID}
+          onChangeState={onStateChange}
+        />
+        ) : (
+          <Text style={styles.detail}>No trailer available</Text>
+        )}
+      
+      </View>
     </ScrollView>
   );
 };
