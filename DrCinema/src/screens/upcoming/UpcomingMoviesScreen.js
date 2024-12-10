@@ -1,13 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import { getUpcomingMovies } from '../../api/services/upcomingMovies';
+import React, { useEffect } from 'react';
+import { View, Text, FlatList, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUpcomingMovies } from '../../redux/reducers/upcomingMoviesSlice';
 import { styles } from './styles/UpcomingMoviesScreenStyles';
+import { useNavigation } from '@react-navigation/native';
 
 const UpcomingMoviesScreen = () => {
-  const [upcomingMovies, setUpcomingMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const { items: upcomingMovies, status, error } = useSelector((state) => state.upcomingMovies);
 
   useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchUpcomingMovies());
+    }
+  }, [dispatch, status]);
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      //onPress={() => navigation.navigate('UpcomingMovieDetail', { upcomingMovie: item })}
+      style={styles.upcomingMovieCard}
+    >
+      <Image
+        source={{
+          uri: item.poster || 'https://via.placeholder.com/500x750?text=No+Poster+Available',
+        }}
+        style={styles.poster}
+      />
+      <View style={styles.details}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.releaseDate}>Release Date: {item['release-dateIS']}</Text>
+        {/*<Button style={styles.releaseDate} title='Watch Trailer'></Button>*/}
+      </View>
+    </TouchableOpacity>
+  );
+
+  if (status === 'loading') {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#007BFF" />
+      </View>
+    );
+  };
+
+  if (status === 'failed') {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Error: {error || 'Failed to fetch upcoming movies'}</Text>
+      </View>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={upcomingMovies}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderItem}
+        contentContainerStyle={styles.listContainer}
+      />
+    </View>
+  );
+};
+
+export default UpcomingMoviesScreen;
+
+  /*useEffect(() => {
     const fetchUpcomingMovies = async () => {
       try {
         const data = await getUpcomingMovies();
@@ -42,14 +101,17 @@ const UpcomingMoviesScreen = () => {
     <FlatList
       data={upcomingMovies}
       keyExtractor={(item) => item.id.toString()} // Assuming each movie has a unique `id`
-      renderItem={({ item }) => (
-        <View style={styles.movieCard}>
+      renderItem={({ item }) => {
+        console.log(item.releaseDate)
+        return(
+          <View style={styles.movieCard}>
           <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.releaseDate}>Release Date: {item.releaseDate}</Text>
+          <Text style={styles.releaseDate}>Release Date: {item['release-dateIS']}</Text>
         </View>
-      )}
+        )
+      }}
     />
   );
 };
 
-export default UpcomingMoviesScreen;
+export default UpcomingMoviesScreen;*/
