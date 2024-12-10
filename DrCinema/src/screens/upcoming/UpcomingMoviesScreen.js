@@ -19,7 +19,7 @@ const UpcomingMoviesScreen = () => {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      //onPress={() => navigation.navigate('UpcomingMovieDetail', { upcomingMovie: item })}
+      onPress={() => navigation.navigate('UpcomingMovieDetail', { upcomingMovie: item })}
       style={styles.upcomingMovieCard}
     >
       <Image
@@ -31,7 +31,6 @@ const UpcomingMoviesScreen = () => {
       <View style={styles.details}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.releaseDate}>Release Date: {item['release-dateIS']}</Text>
-        {/*<Button style={styles.releaseDate} title='Watch Trailer'></Button>*/}
       </View>
     </TouchableOpacity>
   );

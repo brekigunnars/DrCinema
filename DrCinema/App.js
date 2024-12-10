@@ -13,6 +13,7 @@ import CinemasScreen from './src/screens/cinemas/CinemasScreen';
 import CinemaDetailScreen from './src/screens/cinemas/CinemaDetailScreen';
 import MovieDetailScreen from './src/screens/movies/MovieDetailScreen';
 import UpcomingMoviesScreen from './src/screens/upcoming/UpcomingMoviesScreen';
+import UpcomingMovieDetailScreen from './src/screens/upcoming/UpcomingMovieDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -51,6 +52,22 @@ const CinemasStack = () => (
     />
   </Stack.Navigator>
 );
+
+const UpcomingMoviesStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="UpcomingMovies"
+      component={UpcomingMoviesScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="UpcomingMovieDetail"
+      component={UpcomingMovieDetailScreen}
+      options={{ title: 'Movie Details' }}
+    />
+  </Stack.Navigator>
+);
+
 export default function App() {
   return (
     <Provider store={store}>
@@ -80,7 +97,7 @@ export default function App() {
           />
           <Tab.Screen
             name="UpcomingTab"
-            component={UpcomingMoviesScreen}
+            component={UpcomingMoviesStack}
             options={{ headerShown: false, title: 'Upcoming' }}
           />
         </Tab.Navigator>
