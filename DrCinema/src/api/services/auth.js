@@ -1,30 +1,15 @@
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Buffer } from 'buffer';
+import { API_BASE_URL } from './constants';
 
-const BASE_URL = 'https://api.kvikmyndir.is';
-const USERNAME = 'brekia23'; // Replace with your actual username
-const PASSWORD = 'Geimganga121'; // Replace with your actual password
-
-export const authenticate = async () => {
+export const authenticate = async (username, password) => {
   try {
-    const credentials = `${USERNAME}:${PASSWORD}`;
-    const encodedCredentials = Buffer.from(credentials).toString('base64');
-
-    const response = await axios.post(`${BASE_URL}/authenticate`, null, {
-      headers: {
-        Authorization: `Basic ${encodedCredentials}`,
-      },
+    const response = await axios.post(`${API_BASE_URL}/authenticate`, {
+      username,
+      password,
     });
-
-    const { token } = response.data;
-
-    // Store token in AsyncStorage for later use
-    await AsyncStorage.setItem('accessToken', token);
-
-    return token;
+    return response.data.token;
   } catch (error) {
-    console.error('Authentication failed:', error.response?.data || error.message);
+    console.error('Error during authentication:', error);
     throw error;
   }
 };

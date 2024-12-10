@@ -1,61 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, TextInput, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getMovies } from '../../api/services/movies';
-import { getCinemas } from '../../api/services/cinemas';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchMovies } from '../../redux/actions/moviesActions';
 import { styles } from './styles/MovieListScreenStyles';
 
 const MovieListScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const [movies, setMovies] = useState([]);
-  const [cinemas, setCinemas] = useState([]);
-  const [selectedCinema, setSelectedCinema] = useState(null);
+  const { movies, loading } = useSelector((state) => state.movies);
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMoviesAndCinemas = async () => {
-      try {
-        const moviesData = await getMovies();
-        const cinemasData = await getCinemas();
-        setMovies(moviesData);
-        setCinemas(cinemasData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    dispatch(fetchMovies());
+  }, [dispatch]);
 
-    fetchMoviesAndCinemas();
-  }, []);
-
-  const filteredMovies = movies.filter((movie) => {
-    const matchesSearch = movie.title
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-
-    const matchesCinema =
-      selectedCinema === null ||
-      movie.showtimes.some((showtime) => showtime.cinema.name === selectedCinema);
-
-    return matchesSearch && matchesCinema;
-  });
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate('MovieDetail', { movie: item }) // Passing `item` as `movie`
-      }
+      onPress={() => navigation.navigate('MovieDetail', { movie: item })}
       style={styles.movieCard}
     >
       <Image
@@ -73,7 +40,6 @@ const MovieListScreen = () => {
       </View>
     </TouchableOpacity>
   );
-  
 
   if (loading) {
     return (
@@ -91,29 +57,6 @@ const MovieListScreen = () => {
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
-
-      <View style={styles.filterContainer}>
-        <Text style={styles.filterText}>
-          Filter: {selectedCinema ? selectedCinema : 'All Cinemas'}
-        </Text>
-        <TouchableOpacity
-          style={styles.filterButton}
-          onPress={() => {
-            const nextCinemaIndex =
-              selectedCinema === null
-                ? 0
-                : (cinemas.findIndex((c) => c.name === selectedCinema) + 1) %
-                  (cinemas.length + 1);
-
-            setSelectedCinema(
-              nextCinemaIndex === cinemas.length ? null : cinemas[nextCinemaIndex].name
-            );
-          }}
-        >
-          <Text style={styles.filterButtonText}>Change Filter</Text>
-        </TouchableOpacity>
-      </View>
-
       <FlatList
         data={filteredMovies}
         keyExtractor={(item) => item.id.toString()}
