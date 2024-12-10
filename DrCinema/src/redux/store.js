@@ -1,13 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import moviesReducer from './reducers/moviesReducer';
-import cinemasReducer from './reducers/cinemasReducer';
-import authReducer from './reducers/authReducer';
+import moviesReducer from './reducers/moviesSlice';
+import tokenReducer from './reducers/tokenSlice'; // Ensure the token slice is included
 
 const store = configureStore({
   reducer: {
     movies: moviesReducer,
-    cinemas: cinemasReducer,
-    auth: authReducer,
+    auth: tokenReducer,
   },
 });
 

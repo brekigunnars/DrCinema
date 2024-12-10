@@ -1,10 +1,15 @@
-// Create a new file: src/api/services/tokenManager.js
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { authenticate } from './auth';
+
+let currentToken = null;
 
 export const getToken = async () => {
-  return await AsyncStorage.getItem('authToken');
+  if (!currentToken) {
+    currentToken = await authenticate();
+  }
+  return currentToken;
 };
 
-export const setToken = async (token) => {
-  await AsyncStorage.setItem('authToken', token);
+export const refreshToken = async () => {
+  currentToken = await authenticate();
+  return currentToken;
 };

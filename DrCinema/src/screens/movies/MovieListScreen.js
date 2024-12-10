@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchMovies } from '../../redux/actions/moviesActions';
+import React, { useEffect } from 'react';
+import { View, Text, FlatList, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMovies } from '../../redux/reducers/moviesSlice';
 import { styles } from './styles/MovieListScreenStyles';
+import { useNavigation } from '@react-navigation/native';
 
 const MovieListScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const { movies, loading } = useSelector((state) => state.movies);
-  const [searchQuery, setSearchQuery] = useState('');
+  const { items: movies, status, error } = useSelector((state) => state.movies);
 
   useEffect(() => {
-    dispatch(fetchMovies());
-  }, [dispatch]);
-
-  const filteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    if (status === 'idle') {
+      dispatch(fetchMovies());
+    }
+  }, [dispatch, status]);
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -33,15 +30,12 @@ const MovieListScreen = () => {
       />
       <View style={styles.details}>
         <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.description}>{item.plot}</Text>
-        <Text style={styles.genres}>
-          Genres: {item.genres.map((genre) => genre.Name).join(', ')}
-        </Text>
+        <Text style={styles.description}>{item.plot || 'No description available.'}</Text>
       </View>
     </TouchableOpacity>
   );
 
-  if (loading) {
+  if (status === 'loading') {
     return (
       <View style={styles.loaderContainer}>
         <ActivityIndicator size="large" color="#007BFF" />
@@ -49,16 +43,18 @@ const MovieListScreen = () => {
     );
   }
 
+  if (status === 'failed') {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Error: {error || 'Failed to fetch movies'}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchBar}
-        placeholder="Search movies..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
       <FlatList
-        data={filteredMovies}
+        data={movies}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         contentContainerStyle={styles.listContainer}

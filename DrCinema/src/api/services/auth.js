@@ -1,15 +1,18 @@
 import axios from 'axios';
-import { API_BASE_URL } from './constants';
+
+const AUTH_URL = 'https://api.kvikmyndir.is/authenticate';
 
 export const authenticate = async (username, password) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/authenticate`, {
-      username,
-      password,
+    const response = await axios.post(AUTH_URL, {}, {
+      auth: {
+        username,
+        password,
+      },
     });
-    return response.data.token;
+    return response.data.token; // Extract the token from the response
   } catch (error) {
-    console.error('Error during authentication:', error);
+    console.error('Error authenticating:', error.response?.data || error.message);
     throw error;
   }
 };

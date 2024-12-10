@@ -1,56 +1,43 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import { authenticate } from '../../api/services/auth';
 
-// Async function to authenticate and fetch a new token
-export const fetchToken = createAsyncThunk('token/fetchToken', async () => {
-  try {
-    const response = await axios.post('https://api.kvikmyndir.is/authenticate', null, {
-      headers: {
-        Authorization: `Basic ${btoa('username:password')}`, // Replace with your credentials
-      },
-    });
-
-    const token = response.data.token;
-
-    // Save token in AsyncStorage for persistence
-    await AsyncStorage.setItem('accessToken', token);
-
-    return token;
-  } catch (error) {
-    throw new Error('Failed to fetch token');
+export const fetchToken = createAsyncThunk(
+  'auth/fetchToken',
+  async (_, thunkAPI) => {
+    try {
+      const username = 'hopur8'; // Replace with your username
+      const password = 'hopur8'; // Replace with your password
+      const token = await authenticate(username, password);
+      return token;
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Failed to fetch token');
+    }
   }
-});
+);
 
 const tokenSlice = createSlice({
-  name: 'token',
+  name: 'auth',
   initialState: {
-    value: null,
+    token: null,
     status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null,
   },
-  reducers: {
-    clearToken: (state) => {
-      state.value = null;
-      state.status = 'idle';
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchToken.pending, (state) => {
         state.status = 'loading';
+        state.error = null;
       })
       .addCase(fetchToken.fulfilled, (state, action) => {
-        state.value = action.payload;
         state.status = 'succeeded';
+        state.token = action.payload;
       })
       .addCase(fetchToken.rejected, (state, action) => {
-        state.error = action.error.message;
         state.status = 'failed';
+        state.error = action.payload;
       });
   },
 });
-
-export const { clearToken } = tokenSlice.actions;
 
 export default tokenSlice.reducer;
