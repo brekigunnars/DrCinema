@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Text, FlatList, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, ActivityIndicator, Image, TouchableOpacity, TextInput } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUpcomingMovies } from '../../redux/reducers/upcomingMoviesSlice';
 import { styles } from './styles/UpcomingMoviesScreenStyles';
@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 const UpcomingMoviesScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const { items: upcomingMovies, status, error } = useSelector((state) => state.upcomingMovies);
 
@@ -16,6 +17,10 @@ const UpcomingMoviesScreen = () => {
       dispatch(fetchUpcomingMovies());
     }
   }, [dispatch, status]);
+
+  const filteredMovies = upcomingMovies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -53,8 +58,15 @@ const UpcomingMoviesScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* Search Bar */}
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Search movies..."
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
       <FlatList
-        data={upcomingMovies}
+        data={filteredMovies}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         contentContainerStyle={styles.listContainer}
