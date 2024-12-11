@@ -54,7 +54,19 @@ const CinemasStack = () => (
 );
 
 const UpcomingMoviesStack = () => (
-  <Stack.Navigator>
+  <Stack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#f5f5f5',
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+       },
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: '700',
+      }
+    }}>
     <Stack.Screen
       name="Upcoming"
       component={UpcomingMoviesScreen}

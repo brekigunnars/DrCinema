@@ -36,10 +36,16 @@ const UpcomingMovieDetailScreen = ({ route }) => {
       <View style={styles.textContainer}>
         <Text style={styles.title}>{upcomingMovie.title}</Text>
         <Text style={styles.plot}>{upcomingMovie.plot}</Text>
-        <Text style={styles.detail}>Duration: {movieRuntime || 'N/A'}</Text>
-        <Text style={styles.detail}>Year: {upcomingMovie.year}</Text>
-        <Text style={styles.detail}>
-          Genres: {upcomingMovie.genres.map((genre) => genre.Name).join(', ')}
+        <Text>
+          <Text style={styles.detail}>Duration: </Text>{movieRuntime || 'N/A'}
+        </Text>
+        <Text>
+          <Text style={styles.detail}>Year: </Text>{upcomingMovie.year}
+        </Text>
+        <Text>
+          <Text style={styles.detail}>
+            Genres:
+          </Text> {upcomingMovie.genres.map((genre) => genre.Name).join(', ')}
         </Text>
       </View>
       <View>
@@ -53,7 +59,6 @@ const UpcomingMovieDetailScreen = ({ route }) => {
         ) : (
           <Text style={styles.detail}>No trailer available</Text>
         )}
-      
       </View>
     </ScrollView>
   );
