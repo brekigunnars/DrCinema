@@ -1,12 +1,15 @@
-import React from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import React, { useState, useCallback } from 'react';import { View, Text, Image, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { styles } from './styles/MovieDetailScreenStyles';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
 const MovieDetailScreen = ({ route }) => {
   const { movie } = route.params; // Ensure this includes the movie with showtimes
   const trailerID = movie.trailers[0]?.results[0]?.key
-
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+    }
+  }, []);
   if (!movie) {
     return (
       <View style={styles.container}>
