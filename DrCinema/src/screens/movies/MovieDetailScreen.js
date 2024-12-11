@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { styles } from './styles/MovieDetailScreenStyles';
+import YoutubePlayer from 'react-native-youtube-iframe';
 
 const MovieDetailScreen = ({ route }) => {
   const { movie } = route.params; // Ensure this includes the movie with showtimes
+  const trailerID = movie.trailers[0]?.results[0]?.key
 
   if (!movie) {
     return (
@@ -31,6 +33,19 @@ const MovieDetailScreen = ({ route }) => {
       <Text style={styles.detail}>
         Genres: {movie.genres.map((genre) => genre.Name).join(', ')}
       </Text>
+      <View>
+        {trailerID ? (
+          <YoutubePlayer
+          height={300}
+          play={playing}
+          videoId={trailerID}
+          onChangeState={onStateChange}
+        />
+        ) : (
+          <Text style={styles.detail}>No trailer available</Text>
+        )}
+      
+      </View>
 
       {/* Showtimes Section */}
       {movie.showtimes && movie.showtimes.length > 0 && (
@@ -63,6 +78,7 @@ const MovieDetailScreen = ({ route }) => {
           ))}
         </View>
       )}
+      
     </ScrollView>
   );
 };
