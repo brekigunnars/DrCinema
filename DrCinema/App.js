@@ -56,7 +56,7 @@ const CinemasStack = () => (
 const UpcomingMoviesStack = () => (
   <Stack.Navigator>
     <Stack.Screen
-      name="UpcomingMovies"
+      name="Upcoming"
       component={UpcomingMoviesScreen}
       options={{ headerShown: false }}
     />
