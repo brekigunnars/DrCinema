@@ -13,6 +13,8 @@ import { styles } from './styles/CinemaDetailScreenStyles';
 const CinemaDetailScreen = ({ route, navigation }) => {
   const { cinema } = route.params;
   const [sections, setSections] = useState([]);
+  const addressKey = Object.keys(cinema).find((key) => key.trim() === "address");
+  const addressValue = cinema[addressKey];
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -48,7 +50,9 @@ const CinemaDetailScreen = ({ route, navigation }) => {
       // Render cinema details
       const { cinema } = item;
       const cleanedDescription = cinema.description
-      ? cinema.description.replace(/<br\s*\/?>/g, '\n')
+      ? cinema.description
+      .replace(/<br\s*\/?>/g, '\n')
+      .replace(/<[^>]*>/g, '')  // This removes all tags
       : 'No description available for this cinema.';
 
     return (
@@ -57,7 +61,7 @@ const CinemaDetailScreen = ({ route, navigation }) => {
         <Text style={styles.description}>{cleanedDescription}</Text>
         <Text style={styles.address}>
           {/* Address not displaying */}
-          {cinema.address}, {cinema.city} 
+          {addressValue}, {cinema.city} 
         </Text>
         <Text style={styles.phone}>Phone: {cinema.phone}</Text>
         <Text
