@@ -61,7 +61,7 @@ const UpcomingMoviesScreen = () => {
       {/* Search Bar */}
       <TextInput
         style={styles.searchBar}
-        placeholder="Search movies..."
+        placeholder="Search upcoming movies..."
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
