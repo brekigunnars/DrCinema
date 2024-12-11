@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { styles } from './styles/MovieDetailScreenStyles';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
 const MovieDetailScreen = ({ route }) => {
   const { movie } = route.params; // Ensure this includes the movie with showtimes
-  const trailerID = movie.trailers[0]?.results[0]?.key
+  const trailerID = movie.trailers[0]?.results[0]?.key;
+  const [playing, setPlaying] = useState(false);
+
+  const onStateChange = useCallback((state) => {
+    if (state === 'ended') {
+      setPlaying(false);
+    }
+  }, []);
 
   if (!movie) {
     return (
@@ -24,27 +31,27 @@ const MovieDetailScreen = ({ route }) => {
         style={styles.poster}
       />
       <Text style={styles.title}>{movie.title}</Text>
-        <Text style={styles.description} numberOfLines={3}>
-          {movie.plot || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce facilisis magna metus, vel pulvinar justo placerat non. Vivamus lobortis metus augue, et rhoncus mauris ultricies ut.'}
-        </Text>
-        <Text></Text>
+      <Text style={styles.description} numberOfLines={3}>
+        {movie.plot || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce facilisis magna metus, vel pulvinar justo placerat non. Vivamus lobortis metus augue, et rhoncus mauris ultricies ut. '}
+      </Text>
       <Text style={styles.detail}>Duration: {movie.durationMinutes} minutes</Text>
       <Text style={styles.detail}>Year: {movie.year}</Text>
       <Text style={styles.detail}>
         Genres: {movie.genres.map((genre) => genre.Name).join(', ')}
       </Text>
+
+      {/* Trailer Section */}
       <View>
         {trailerID ? (
           <YoutubePlayer
-          height={300}
-          play={playing}
-          videoId={trailerID}
-          onChangeState={onStateChange}
-        />
+            height={300}
+            play={playing}
+            videoId={trailerID}
+            onChangeState={onStateChange}
+          />
         ) : (
           <Text style={styles.detail}>No trailer available</Text>
         )}
-      
       </View>
 
       {/* Showtimes Section */}
@@ -59,9 +66,9 @@ const MovieDetailScreen = ({ route }) => {
                   <TouchableOpacity
                     key={idx}
                     onPress={() => {
-                      // Ensure timeSlot.purchaseLink is available. If not, handle gracefully.
-                      if (timeSlot.purchaseLink) {
-                        Linking.openURL(timeSlot.purchaseLink);
+                      // Ensure timeSlot.purchase_url is available. If not, handle gracefully.
+                      if (timeSlot.purchase_url) {
+                        Linking.openURL(timeSlot.purchase_url);
                       } else {
                         console.warn('No purchase link provided for this showtime.');
                       }
@@ -78,7 +85,6 @@ const MovieDetailScreen = ({ route }) => {
           ))}
         </View>
       )}
-      
     </ScrollView>
   );
 };
