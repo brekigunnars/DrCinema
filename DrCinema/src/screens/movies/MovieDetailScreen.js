@@ -22,7 +22,10 @@ const MovieDetailScreen = ({ route }) => {
         style={styles.poster}
       />
       <Text style={styles.title}>{movie.title}</Text>
-      <Text style={styles.plot}>{movie.plot}</Text>
+        <Text style={styles.description} numberOfLines={3}>
+          {movie.plot || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce facilisis magna metus, vel pulvinar justo placerat non. Vivamus lobortis metus augue, et rhoncus mauris ultricies ut.'}
+        </Text>
+        <Text></Text>
       <Text style={styles.detail}>Duration: {movie.durationMinutes} minutes</Text>
       <Text style={styles.detail}>Year: {movie.year}</Text>
       <Text style={styles.detail}>

@@ -1,81 +1,75 @@
-import { StyleSheet } from 'react-native';
-
-export const styles = StyleSheet.create({
+export const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 10,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 10,
+    paddingTop: 50, // Add padding to avoid content being too high on the screen
   },
   searchBar: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
-    padding: 10,
-    fontSize: 16,
+    height: 40,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 8,
     marginBottom: 10,
-  },
-  filterContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  filterText: {
+    paddingHorizontal: 10,
+    backgroundColor: '#F9F9F9',
     fontSize: 16,
-    color: '#555',
-  },
-  filterButton: {
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-  },
-  filterButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  listContainer: {
-    paddingBottom: 20,
   },
   movieCard: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ddd',
+    backgroundColor: '#F9F9F9',
+    borderRadius: 8,
     padding: 10,
-    marginBottom: 10,
-    alignItems: 'center',
+    marginVertical: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   poster: {
-    width: 80,
-    height: 120,
-    borderRadius: 5,
+    width: 100,
+    height: 150,
+    borderRadius: 8,
     marginRight: 10,
   },
   details: {
     flex: 1,
+    justifyContent: 'center',
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 5,
     color: '#333',
+    marginBottom: 4,
   },
   description: {
     fontSize: 14,
-    color: '#555',
-    marginBottom: 5,
-    lineHeight: 20,
+    color: '#666',
+    marginBottom: 8,
   },
-  genres: {
-    fontSize: 14,
-    color: '#007BFF',
+  infoText: {
+    fontSize: 12,
+    color: '#444',
+    marginBottom: 4,
+  },
+  infoLabel: {
+    fontWeight: 'bold',
   },
   loaderContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
-});
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    color: 'red',
+  },
+  listContainer: {
+    paddingBottom: 20,
+  },
+};
