@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fefefe', // Light background for light mode
+    backgroundColor: '#fefefe',
     paddingHorizontal: 15,
     paddingVertical: 20,
   },
@@ -33,15 +33,14 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#222831', // Darker shade for text
+    color: '#222831',
     marginBottom: 10,
     textAlign: 'center',
   },
   plot: {
     fontSize: 16,
     lineHeight: 24,
-    color: '#4b5563', // Softer shade for readability
-    textAlign: 'justify',
+    color: '#4b5563',
     marginBottom: 15,
   },
   detail: {
@@ -51,14 +50,14 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
   },
   youtubePlayerContainer: {
-    marginTop: 20,
+    marginTop: 10,
     borderRadius: 10,
-    overflow: 'hidden', // Ensures the player is cleanly contained
+    overflow: 'hidden',
   },
   errorText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#dc2626', // Bright red for error messages
+    color: '#dc2626',
     textAlign: 'center',
     marginTop: 20,
   },
