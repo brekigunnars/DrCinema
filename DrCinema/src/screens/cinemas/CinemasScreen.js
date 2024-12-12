@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { getCinemas } from '../../api/services/cinemas';
 import { styles } from './styles/CinemasScreenStyles';
-import { SafeAreaView } from 'react-native';
 
 const CinemasScreen = ({ navigation }) => {
   const [cinemas, setCinemas] = useState([]);
@@ -53,7 +52,7 @@ const CinemasScreen = ({ navigation }) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TextInput
         style={styles.searchBar}
         placeholder="Search cinema..."
@@ -67,7 +66,7 @@ const CinemasScreen = ({ navigation }) => {
         renderItem={renderItem}
         contentContainerStyle={styles.listContainer}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

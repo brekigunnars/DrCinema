@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
+  ScrollView,
   Text,
   SectionList,
   TouchableOpacity,
@@ -56,21 +57,26 @@ const CinemaDetailScreen = ({ route, navigation }) => {
       : 'No description available for this cinema.';
 
     return (
-      <View style={styles.details}>
+      <ScrollView style={styles.detailsContainer}>
         <Text style={styles.name}>{cinema.name}</Text>
         <Text style={styles.description}>{cleanedDescription}</Text>
-        <Text style={styles.address}>
+        <Text style={styles.text}>
           {/* Address not displaying */}
           {addressValue}, {cinema.city} 
         </Text>
-        <Text style={styles.phone}>Phone: {cinema.phone}</Text>
-        <Text
-          style={styles.website}
-          onPress={() => Linking.openURL(`https://${cinema.website}`)}
-        >
-          Website: {cinema.website}
+        <Text style={styles.text}>Phone:
+          <Text style={styles.phone}> {cinema.phone}</Text>
+
         </Text>
-      </View>
+        <Text style={styles.text}>
+          Website:
+          <Text
+            style={styles.website}
+            onPress={() => Linking.openURL(`https://${cinema.website}`)}
+            > {cinema.website}
+          </Text>
+        </Text>
+      </ScrollView>
     );
     } else if (item.type === 'movie') {
       // Render each movie
