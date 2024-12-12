@@ -2,9 +2,21 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#F9F9F9',
+    flexGrow: 1,
+    backgroundColor: '#fefefe',
     paddingHorizontal: 15,
+    paddingVertical: 20,
+  },
+  detailsContainer: {
+    margin: 15,
+    padding: 15,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 4,
   },
   details: {
     padding: 15,
@@ -18,28 +30,34 @@ export const styles = StyleSheet.create({
     elevation: 3,
   },
   name: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    color: '#333',
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#222831',
+    marginBottom: 15,
   },
   description: {
     fontSize: 16,
-    marginVertical: 10,
-    color: '#555',
+    lineHeight: 24,
+    color: '#4b5563',
+    marginBottom: 10,
   },
-  address: {
-    fontSize: 14,
+  text: {
+    fontSize: 16,
+    fontWeight: '500',
     color: '#777',
+    marginBottom: 8,
   },
   phone: {
-    fontSize: 14,
-    marginVertical: 5,
+    fontSize: 16,
+    fontWeight: '500',
     color: '#007BFF',
+    marginBottom: 8,
   },
   website: {
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: '500',
     color: '#007BFF',
+    marginBottom: 8,
     textDecorationLine: 'underline',
   },
   moviesPlaying: {

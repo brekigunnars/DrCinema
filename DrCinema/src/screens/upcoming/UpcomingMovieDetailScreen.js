@@ -40,7 +40,7 @@ const UpcomingMovieDetailScreen = ({ route }) => {
           <Text style={styles.detail}>Duration: </Text>{movieRuntime || 'N/A'}
         </Text>
         <Text>
-          <Text style={styles.detail}>Year: </Text>{upcomingMovie.year}
+          <Text style={styles.detail}>Release Date: </Text>{upcomingMovie['release-dateIS']}
         </Text>
         <Text>
           <Text style={styles.detail}>
@@ -48,7 +48,7 @@ const UpcomingMovieDetailScreen = ({ route }) => {
           </Text> {upcomingMovie.genres.map((genre) => genre.Name).join(', ')}
         </Text>
       </View>
-      <View>
+      <View style={styles.youtubePlayerContainer}>
         {trailerID ? (
           <YoutubePlayer
           height={300}

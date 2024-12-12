@@ -19,7 +19,20 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const MoviesStack = () => (
-  <Stack.Navigator>
+  <Stack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#f5f5f5',
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+      },
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: '700',
+      }
+    }}
+  >
     <Stack.Screen
       name="Movies"
       component={MovieListScreen}
@@ -34,7 +47,19 @@ const MoviesStack = () => (
 );
 
 const CinemasStack = () => (
-  <Stack.Navigator>
+  <Stack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#f5f5f5',
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+      },
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: '700',
+      }
+    }}>
     <Stack.Screen
       name="Cinemas"
       component={CinemasScreen}
