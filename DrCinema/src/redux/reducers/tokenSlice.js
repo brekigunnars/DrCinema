@@ -19,7 +19,7 @@ const tokenSlice = createSlice({
   name: 'auth',
   initialState: {
     token: null,
-    status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+    status: 'idle', 
     error: null,
   },
   reducers: {},
