@@ -52,6 +52,8 @@ DrCinema is a React Native application designed to showcase movie listings, cine
 The application integrates with the [Kvikmyndir API](https://api.kvikmyndir.is) for movie data. The API requires authentication using a username and password. Credentials are stored in `tokenSlice.js` for fetching and refreshing the token.
 
 ---
+## Authors
+Breki Gunnarsson Arndal, Jakob Máni Magnússon & Jón Ásgeirsson
 
 
 
