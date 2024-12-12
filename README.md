@@ -53,7 +53,7 @@ The application integrates with the [Kvikmyndir API](https://api.kvikmyndir.is) 
 
 ---
 ## Authors
-Breki Gunnarsson Arndal, Jakob Máni Magnússon, Jón Ásgeirsson & Róbert Ómarsson
+Breki Gunnarsson Arndal, Jakob Máni Magnússon, Jón Ásgeirsson & Róbert Andri Ómarsson
 
 
 
